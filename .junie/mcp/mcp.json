@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/opt/homebrew/Cellar/php@8.2/8.2.32/bin/php",
+            "args": [
+                "/Users/mankanisidharath/Documents/job-application-projects/Laravel/imprint-pixelforge-assessment/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
