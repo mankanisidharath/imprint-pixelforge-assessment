@@ -37,7 +37,7 @@ Use `main` as the only long-lived branch. Use `feat/<slug>` or `fix/<slug>` for 
 ## Known gaps
 
 - Laravel 13/Inertia 3 upgrade is blocked by Composer security advisories.
-- Money arithmetic, settlement, webhook verification, and real generation pages are future phases.
+- The submission job, generation creation actions, estimate endpoint, and real generation pages remain future phases.
 - No graph tooling, graphify, grep hook, auto-memory, CI provider, or deployment workflow is configured.
 
 <laravel-boost-guidelines>

@@ -1,20 +1,10 @@
 <?php
 
 use App\Models\Generation;
-use Illuminate\Testing\TestResponse;
 
 function webhookSnapshot(string $id, string $status = 'succeeded'): array
 {
     return ['id' => $id, 'status' => $status, 'metadata' => [], 'rates' => ['input_text_tokens' => '5.00', 'input_image_tokens' => '10.00', 'output_tokens' => '40.00', 'reasoning_tokens' => '12.50'], 'usage' => ['input_text_tokens' => 12, 'input_image_tokens' => 765, 'output_tokens' => 6450, 'reasoning_tokens' => 3184], 'completed_at' => '2026-11-17T00:01:00Z'];
-}
-
-function signedWebhook(array $event, ?string $secret = 'test-secret', ?int $timestamp = null, ?string $body = null): TestResponse
-{
-    $timestamp ??= time();
-    $payload = json_encode($event);
-    $signature = hash_hmac('sha256', $timestamp.'.'.$payload, $secret);
-
-    return test()->call('POST', '/webhooks/pixelforge', [], [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_PIXELFORGE_SIGNATURE' => "t={$timestamp},v1={$signature}"], $body ?? $payload);
 }
 
 beforeEach(function () {

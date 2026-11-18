@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\GenerationStatus;
+use App\Features\Pixelforge\TokenType;
 use App\Models\Generation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -58,7 +59,7 @@ class GenerationSettler
                     throw new RuntimeException('Succeeded generation has no usage.');
                 }
                 $cost = $this->calculator->providerCost($usage, $snapshot['rates']);
-                foreach (['input_text_tokens', 'input_image_tokens', 'output_tokens', 'reasoning_tokens'] as $key) {
+                foreach (TokenType::BILLABLE_KEYS as $key) {
                     $generation->{$key} = $usage[$key];
                 }
                 $generation->provider_cost_nano = $cost;

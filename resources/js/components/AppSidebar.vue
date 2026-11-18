@@ -3,40 +3,20 @@ import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { createGenerationNavItem, generationHistoryNavItem } from '@/features/generations/navigation';
+import { dashboardNavItem, documentationNavItem, repositoryNavItem } from '@/lib/navigation';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, ImagePlus, Images, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Generate',
-        href: '/generations/create',
-        icon: ImagePlus,
-    },
-    {
-        title: 'History',
-        href: '/generations',
-        icon: Images,
-    },
-];
+const mainNavItems: NavItem[] = [dashboardNavItem, createGenerationNavItem, generationHistoryNavItem];
 
 const footerNavItems: NavItem[] = [
     {
+        ...repositoryNavItem,
         title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
     },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
-    },
+    documentationNavItem,
 ];
 </script>
 

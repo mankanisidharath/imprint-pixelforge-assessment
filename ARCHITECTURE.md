@@ -32,10 +32,16 @@ Laravel application
 - `app/Models`: Central Eloquent models and database relationships.
 - `app/Http`: Controllers and Inertia request boundaries.
 - `app/Services/Pixelforge.php`: Thin provider HTTP client.
-- `app/Services/CostCalculator.php` and `app/Services/GenerationSettler.php`: Reserved application-service contracts.
+- `app/Services/CostCalculator.php` calculates provider costs, markup, and estimates in integer nanodollars.
+- `app/Services/GenerationSettler.php` settles snapshots transactionally for webhooks and reconciliation.
+- `app/Support/Money.php` parses decimal strings and formats exact nanodollar amounts.
 - `app/Jobs`: Durable background-job contracts.
-- `app/Features`: Empty boundary for future feature-owned behavior. Do not move existing Pixelforge contracts here without a coordinated change.
+- `app/Features/Pixelforge/TokenType.php` defines the token keys and billable-key list shared by costing and settlement.
+- `app/Features/Pixelforge/GenerationOptions.php` defines the options, defaults, and limits shared by the controller and factory.
 - `resources/js/pages`: Inertia Vue pages.
+- `resources/js/lib/navigation.ts` defines shared dashboard and external navigation links.
+- `resources/js/features/generations/navigation.ts` defines generation links shared by the sidebar and page breadcrumbs.
+- `resources/js/types/index.ts` defines the navigation item shape consumed by navigation components.
 - `docs`: Provider facts and handoff contracts.
 
 ## Data model
@@ -45,3 +51,5 @@ Laravel application
 - `webhook_events` records at-least-once provider delivery attempts by unique event ID.
 
 Money values are integer nanodollars. A future ledger must be append-only, use idempotency keys, and lock rows while changing balances.
+
+The calculator returns provider-cost estimate bounds. The planned estimate endpoint applies markup to each bound for its user-facing preview. On success, settlement calculates actual provider cost from reported usage and records the marked-up amount in `charge_nano`. Failed generations record zero cost and charge. Balance debiting remains a future phase.

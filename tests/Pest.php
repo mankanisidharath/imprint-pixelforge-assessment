@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 /*
@@ -47,4 +48,16 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function signedWebhook(array $event, ?string $secret = 'test-secret', ?int $timestamp = null, ?string $body = null): TestResponse
+{
+    $timestamp ??= time();
+    $payload = json_encode($event);
+    $signature = hash_hmac('sha256', $timestamp.'.'.$payload, $secret);
+
+    return test()->call('POST', '/webhooks/pixelforge', [], [], [], [
+        'CONTENT_TYPE' => 'application/json',
+        'HTTP_PIXELFORGE_SIGNATURE' => "t={$timestamp},v1={$signature}",
+    ], $body ?? $payload);
 }

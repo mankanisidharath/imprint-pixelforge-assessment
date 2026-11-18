@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Features\Pixelforge\TokenType;
 use App\Support\Money;
 use InvalidArgumentException;
 use OverflowException;
@@ -12,7 +13,7 @@ class CostCalculator
     {
         $cost = 0;
 
-        foreach (['input_text_tokens', 'input_image_tokens', 'output_tokens', 'reasoning_tokens'] as $key) {
+        foreach (TokenType::BILLABLE_KEYS as $key) {
             $tokens = (int) $usage[$key];
             $rate = Money::rateToNanoPerToken($rates[$key]);
 
@@ -64,18 +65,18 @@ class CostCalculator
         $textMax = intdiv($text * (100 + $variance) + 99, 100);
         $reasoning = $tokens['reasoning'][$quality];
         $fixedUsage = [
-            'input_image_tokens' => $referenceCount * $tokens['per_reference_image'],
-            'output_tokens' => $tokens['output'][$quality][$size],
+            TokenType::INPUT_IMAGE => $referenceCount * $tokens['per_reference_image'],
+            TokenType::OUTPUT => $tokens['output'][$quality][$size],
         ];
 
         return [
             'min' => $this->providerCost($fixedUsage + [
-                'input_text_tokens' => $textMin,
-                'reasoning_tokens' => $reasoning['min'],
+                TokenType::INPUT_TEXT => $textMin,
+                TokenType::REASONING => $reasoning['min'],
             ], $rates),
             'max' => $this->providerCost($fixedUsage + [
-                'input_text_tokens' => $textMax,
-                'reasoning_tokens' => $reasoning['max'],
+                TokenType::INPUT_TEXT => $textMax,
+                TokenType::REASONING => $reasoning['max'],
             ], $rates),
         ];
     }

@@ -26,7 +26,16 @@ test('settles processing and success exactly once and preserves final state', fu
         ->and($settler->apply(settlementSnapshot($generation->provider_id, 'processing')))->toBe('final')
         ->and($settler->apply(settlementSnapshot($generation->provider_id, 'failed')))->toBe('final')
         ->and($generation->fresh()->getAttributes())->toBe($before);
-    $this->assertDatabaseHas('generations', ['id' => $generation->id, 'status' => 'succeeded', 'provider_cost_nano' => 305510000, 'charge_nano' => 381887500]);
+    $this->assertDatabaseHas('generations', [
+        'id' => $generation->id,
+        'status' => 'succeeded',
+        'input_text_tokens' => 12,
+        'input_image_tokens' => 765,
+        'output_tokens' => 6450,
+        'reasoning_tokens' => 3184,
+        'provider_cost_nano' => 305510000,
+        'charge_nano' => 381887500,
+    ]);
 });
 
 test('provider failure is final and costs nothing', function () {

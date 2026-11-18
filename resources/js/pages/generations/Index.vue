@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { generationHistoryNavItem } from '@/features/generations/navigation';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
@@ -28,12 +29,7 @@ defineProps<{
     };
 }>();
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'History',
-        href: '/generations',
-    },
-];
+const breadcrumbs: BreadcrumbItem[] = [generationHistoryNavItem];
 </script>
 
 <template>

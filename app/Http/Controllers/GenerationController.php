@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\Pixelforge\GenerationOptions;
 use App\Models\Generation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -45,10 +46,10 @@ class GenerationController extends Controller
     public function create(): Response
     {
         return Inertia::render('generations/Create', [
-            'sizes' => ['1024x1024', '1536x1024', '1024x1536'],
-            'qualities' => ['low', 'medium', 'high'],
-            'maxPromptLength' => 4000,
-            'maxReferenceImages' => 4,
+            'sizes' => GenerationOptions::SIZES,
+            'qualities' => GenerationOptions::QUALITIES,
+            'maxPromptLength' => GenerationOptions::MAX_PROMPT_LENGTH,
+            'maxReferenceImages' => GenerationOptions::MAX_REFERENCE_IMAGES,
         ]);
     }
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { createGenerationNavItem } from '@/features/generations/navigation';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
@@ -10,12 +11,7 @@ defineProps<{
     maxReferenceImages: number;
 }>();
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Generate',
-        href: '/generations/create',
-    },
-];
+const breadcrumbs: BreadcrumbItem[] = [createGenerationNavItem];
 </script>
 
 <template>

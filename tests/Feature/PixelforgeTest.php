@@ -6,10 +6,14 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
-test('sends the generation request with authentication and idempotency headers', function () {
-    config()->set('services.pixelforge.base_url', 'https://pixelforge.test/v1');
-    config()->set('services.pixelforge.key', 'test-api-key');
+beforeEach(function () {
+    config([
+        'services.pixelforge.base_url' => 'https://pixelforge.test/v1',
+        'services.pixelforge.key' => 'test-api-key',
+    ]);
+});
 
+test('sends the generation request with authentication and idempotency headers', function () {
     Http::preventStrayRequests();
     Http::fake([
         'https://pixelforge.test/v1/generations' => Http::response([], 202),
@@ -40,9 +44,6 @@ test('sends the generation request with authentication and idempotency headers',
 });
 
 test('includes reference images only when they are present', function () {
-    config()->set('services.pixelforge.base_url', 'https://pixelforge.test/v1');
-    config()->set('services.pixelforge.key', 'test-api-key');
-
     Http::preventStrayRequests();
     Http::fake([
         'https://pixelforge.test/v1/generations' => Http::response([], 202),
@@ -58,9 +59,6 @@ test('includes reference images only when they are present', function () {
 });
 
 test('caches the pricing response for ten minutes', function () {
-    config()->set('services.pixelforge.base_url', 'https://pixelforge.test/v1');
-    config()->set('services.pixelforge.key', 'test-api-key');
-
     Cache::forget('pixelforge.pricing');
     Http::preventStrayRequests();
     Http::fake([
@@ -75,3 +73,29 @@ test('caches the pricing response for ten minutes', function () {
     expect($secondPricing)->toBe(['object' => 'pricing']);
     Http::assertSentCount(1);
 });
+
+test('uses shared request settings with independent headers for each read', function (string $method, array $arguments, string $url) {
+    Cache::forget('pixelforge.pricing');
+    Http::preventStrayRequests();
+    Http::fake([
+        'https://pixelforge.test/v1/generations' => Http::response([], 202),
+        $url => Http::response([], 200),
+    ]);
+    $generation = Generation::factory()->make();
+    $client = new Pixelforge;
+    $client->create($generation);
+
+    $client->{$method}(...$arguments);
+
+    Http::assertSent(fn (Request $request): bool => $request->method() === 'GET'
+        && $request->url() === $url
+        && $request->hasHeader('Authorization', 'Bearer test-api-key')
+        && $request->hasHeader('Accept', 'application/json')
+        && ! $request->hasHeader('Idempotency-Key')
+    );
+    Http::assertSentCount(2);
+})->with([
+    'generation lookup' => ['find', ['gen_existing'], 'https://pixelforge.test/v1/generations/gen_existing'],
+    'usage report' => ['usage', ['2026-11-01', '2026-11-18'], 'https://pixelforge.test/v1/usage?start_date=2026-11-01&end_date=2026-11-18'],
+    'pricing' => ['pricing', [], 'https://pixelforge.test/v1/pricing'],
+]);

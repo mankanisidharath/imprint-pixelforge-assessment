@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\GenerationStatus;
+use App\Features\Pixelforge\GenerationOptions;
 use App\Models\Generation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,8 +23,8 @@ class GenerationFactory extends Factory
         return [
             'user_id' => User::factory(),
             'prompt' => fake()->sentence(),
-            'size' => '1024x1024',
-            'quality' => 'medium',
+            'size' => GenerationOptions::DEFAULT_SIZE,
+            'quality' => GenerationOptions::DEFAULT_QUALITY,
             'reference_images' => [],
             'status' => GenerationStatus::Queued,
             'estimated_charge_min_nano' => 1,
