@@ -3,41 +3,76 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>User guide — PixelForge Assessment</title>
+        <title>Assessment guide — PixelForge</title>
         <style>
             :root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.6; }
             body { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
             h1, h2 { line-height: 1.2; }
             h2 { margin-top: 2rem; }
             a { color: light-dark(#1d4ed8, #93c5fd); }
+            code { font-size: .95em; }
             li + li { margin-top: .5rem; }
         </style>
     </head>
     <body>
         <main>
             <a href="/generations">← Back to generation history</a>
-            <h1>PixelForge Assessment user guide</h1>
-            <p>This guide explains the image generation screens and how to read their statuses and prices.</p>
+            <h1>PixelForge assessment guide</h1>
+            <p>Generate images with Pixelforge, review an estimated charge before submitting, and follow the result in History. Usage shows a daily breakdown of your finished generations and charges.</p>
+
             <h2>Creating an image</h2>
             <ol>
-                <li>Choose <strong>Generate</strong> in the sidebar and enter a prompt describing the image. The counter shows the prompt length; the limit is 4,000 characters.</li>
-                <li>Select a square, landscape, or portrait size and a low, medium, or high quality.</li>
-                <li>Optionally add up to four reference image URLs. Use Remove to remove a URL.</li>
-                <li>Review the estimated cost range and choose <strong>Generate</strong>.</li>
+                <li>Choose <strong>Generate</strong> and enter a prompt of up to 4,000 characters.</li>
+                <li>Select a size and quality, and optionally add up to four reference image URLs.</li>
+                <li>Review the estimate and choose <strong>Generate</strong>.</li>
             </ol>
-            <h2>Estimates and charges</h2>
-            <p>The estimated range includes a 25% service fee. The actual charge is calculated when an image finishes and depends on the tokens used. Failed generations are free. If an estimate cannot be loaded, the page displays “Estimate unavailable.”</p>
-            <h2>Generation history</h2>
-            <p>Choose <strong>History</strong> to see your generations, their prompts, size, quality, cost, and creation time. Pending generations update automatically while the page is open.</p>
+
+            <h2>Try these prompts</h2>
+            <p>Enter these on the Generate page, then check the outcome in History.</p>
             <ul>
-                <li><strong>Queued:</strong> Waiting to start. A note may explain the wait.</li>
+                <li><code>[succeed] a red fox</code> — succeeds and is charged.</li>
+                <li><code>[fail] a castle</code> — fails during processing and is not charged.</li>
+                <li><code>[succeed] [duplicate] a boat</code> — sends duplicate webhook events; the generation is charged once.</li>
+                <li><code>[slow] [succeed]</code> — submit five times in quick succession to exercise concurrency waiting.</li>
+                <li><code>[blocked] test</code> and <code>[overloaded] test</code> — show failure messages for a blocked prompt and an unavailable provider.</li>
+            </ul>
+
+            <h2>How to read costs</h2>
+            <p>The estimate is a range that includes a 25% service fee; when available, the Generate button shows its maximum. The final charge depends on the tokens used and appears in History when the image finishes. Hover over the displayed charge to see the exact nine-decimal value. Failed generations are not charged.</p>
+
+            <h2>History</h2>
+            <p>History shows your prompts, images, sizes, quality, charges, and creation times. Pending generations update automatically while the page is open.</p>
+            <ul>
+                <li><strong>Queued:</strong> Waiting to start; a note may explain the wait.</li>
                 <li><strong>Processing:</strong> The image is being generated.</li>
-                <li><strong>Succeeded:</strong> The image is ready and the final charge is displayed. Select the image to open it at full size.</li>
+                <li><strong>Succeeded:</strong> The image and final charge are ready. Select the image to open it at full size.</li>
                 <li><strong>Failed:</strong> The generation was not charged. Review the error and select <strong>Try again</strong> to return to the form.</li>
             </ul>
-            <p>Image links last 24 hours. After a link expires, the history card displays an expiration message. Use the pagination controls to browse older results.</p>
+            <p>Image links last 24 hours. Use the pagination controls to browse older results.</p>
+
+            <h2>Usage</h2>
+            <p>Usage shows your finished generations and exact charges for the last 30 UTC days, with a daily breakdown. Local submission failures without a completion date are counted on their last update date. Pending generations remain in History.</p>
+
             <h2>Account settings</h2>
-            <p>Open the user menu in the sidebar to access your profile and account settings or to sign out.</p>
+            <p>Open the sidebar user menu to manage your profile and account settings or sign out.</p>
+
+            <h2>Architecture in one screen</h2>
+            <ul>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/README.md#money">Nanodollars</a> keep stored amounts precise.</li>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/README.md#state-and-idempotency">One settlement function</a> handles provider updates from submissions, webhooks, and reconciliation.</li>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/README.md#design-decisions">Event deduplication</a> records each webhook event at most once.</li>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/README.md#state-and-idempotency">A row lock</a> protects settlement from competing updates.</li>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/README.md#submission-and-errors">Polling fallback</a> checks unfinished generations when webhook updates are missed.</li>
+            </ul>
+
+            <h2>Data</h2>
+            <p>The documented production setup uses ClickHouse Managed Postgres for the application and ClickHouse for analytics. See <a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/docs/ANALYTICS.md">the analytics documentation</a> for the queries.</p>
+
+            <h2>Links</h2>
+            <ul>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment">Repository</a></li>
+                <li><a href="https://github.com/mankanisidharath/imprint-pixelforge-assessment/blob/main/README.md">README</a></li>
+            </ul>
         </main>
     </body>
 </html>

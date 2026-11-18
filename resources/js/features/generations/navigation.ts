@@ -1,5 +1,5 @@
 import type { NavItem } from '@/types';
-import { ImagePlus, Images } from 'lucide-vue-next';
+import { ChartNoAxesCombined, ImagePlus, Images } from 'lucide-vue-next';
 
 export const createGenerationNavItem: NavItem = {
     title: 'Generate',
@@ -11,4 +11,10 @@ export const generationHistoryNavItem: NavItem = {
     title: 'History',
     href: '/generations',
     icon: Images,
+};
+
+export const generationAnalyticsNavItem: NavItem = {
+    title: 'Usage',
+    href: '/analytics',
+    icon: ChartNoAxesCombined,
 };

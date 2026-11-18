@@ -25,7 +25,7 @@ Local `main` includes the session's money calculations, settlement, shared-defin
 
 ## In progress
 
-Preparing phase-6-integration for review.
+Added a signed-in 30-day Usage overview and daily charge table.
 
 ## Broken
 

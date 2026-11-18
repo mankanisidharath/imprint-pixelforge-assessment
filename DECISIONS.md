@@ -4,6 +4,12 @@ Append-only log. Newest first.
 
 ---
 
+## 19 Nov 2026 — Use transactional data for personal analytics
+
+The authenticated 30-day overview reads only the current user’s finished generations from the application database. It uses UTC completion dates and falls back to the last update for local failures without a completion time; individual generation details remain in History.
+
+---
+
 ## 18 Nov 2026 — Exercise the integrated provider lifecycle
 
 Use signed HTTP webhook requests, a synchronous submission queue, fake provider HTTP responses, and the real settler in end-to-end tests. The early-webhook case delivers the event while the provider POST is in flight, exercising the race at the actual integration boundary. Migration checks use disposable in-memory SQLite to avoid touching a configured database.

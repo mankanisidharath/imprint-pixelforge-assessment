@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenerationAnalyticsController;
 use App\Http\Controllers\GenerationController;
 use App\Http\Controllers\PixelforgeWebhookController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ Route::get('dashboard', function () {
 })->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('analytics', GenerationAnalyticsController::class)->name('generations.analytics');
     Route::get('generations', [GenerationController::class, 'index'])->name('generations.index');
     Route::get('generations/create', [GenerationController::class, 'create'])->name('generations.create');
     Route::get('generations/estimate', [GenerationController::class, 'estimate'])->name('generations.estimate');

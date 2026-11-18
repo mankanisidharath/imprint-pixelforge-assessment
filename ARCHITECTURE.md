@@ -36,6 +36,7 @@ Laravel application
 - `app/Services/GenerationSettler.php` settles snapshots transactionally for webhooks and reconciliation.
 - `app/Support/Money.php` parses decimal strings and formats exact nanodollar amounts.
 - `app/Jobs/SubmitGeneration.php`: Queued, idempotent provider submission and retry handling.
+- `app/Features/GenerationAnalytics/GenerationAnalytics.php` summarizes a user’s finished generations and exact charges by UTC day.
 - `app/Features/Pixelforge/TokenType.php` defines the token keys and billable-key list shared by costing and settlement.
 - `app/Features/Pixelforge/GenerationOptions.php` defines the options, defaults, and limits shared by the controller and factory.
 - `resources/js/pages`: Inertia Vue pages.

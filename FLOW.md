@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Verifying submission, webhook settlement, reconciliation, and generation pages together on phase-6-integration.
+Usage: `GET /analytics` -> `GenerationAnalyticsController` -> `GenerationAnalytics::forUser` -> `generations/Analytics.vue`; finished records are grouped by UTC day for the signed-in user.
 
 ## Reference flows
 
