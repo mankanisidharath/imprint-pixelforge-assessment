@@ -13,7 +13,7 @@
 ],
 ```
 
-`.env.example` includes empty `PIXELFORGE_BASE_URL`, `PIXELFORGE_API_KEY`, and `PIXELFORGE_WEBHOOK_SECRET` values.
+`.env.example` supplies the provider base URL and empty `PIXELFORGE_API_KEY` and `PIXELFORGE_WEBHOOK_SECRET` values.
 
 ## Generation status
 
@@ -92,11 +92,11 @@ The planned preview applies `charge` to each estimate bound. For 400 characters,
 
 On success, settlement calculates the final recorded charge from actual reported usage and the generation's fixed rates. For example, actual usage of 100 text, 1,530 image, 6,450 output, and 3,000 reasoning tokens costs 311,300,000 nano at the documented rates and produces a charge of 389,125,000 nano. Failed generations record zero cost and charge.
 
-Settlement persists these amounts in `provider_cost_nano` and `charge_nano`. Balance debiting remains a future phase. The current estimate endpoint, creation action, and submission job still require implementation.
+Settlement persists these amounts in `provider_cost_nano` and `charge_nano`. Balance debiting remains a future phase. The estimate endpoint, creation action, and submission job implement this flow.
 
-`App\Jobs\SubmitGeneration implements ShouldQueue` and has `__construct(public Generation $generation)`. Its `handle(): void` is deferred. `App\Console\Commands\ReconcileGenerations` has signature `generations:reconcile` and polls old unfinished generations through the shared settler. `App\Http\Controllers\PixelforgeWebhookController` verifies signatures, records events once, and settles generation snapshots before responding with 204.
+`App\Jobs\SubmitGeneration implements ShouldQueue` and has `__construct(public Generation $generation)`. Its `handle()` submits the generation and applies accepted snapshots through the settler. `App\Console\Commands\ReconcileGenerations` has signature `generations:reconcile` and polls old unfinished generations through the shared settler. `App\Http\Controllers\PixelforgeWebhookController` verifies signatures, records events once, and settles generation snapshots before responding with 204.
 
-`App\Http\Controllers\GenerationController` exposes `index`, `create`, `estimate`, and `store`. The index/create actions render stub Inertia pages, estimate returns empty JSON until it is connected to the calculator, and store redirects to `generations.index`.
+`App\Http\Controllers\GenerationController` exposes `index`, `create`, `estimate`, and `store`. The index/create actions render Inertia pages, estimate returns marked-up bounds, and store creates a generation, dispatches submission, and redirects to `generations.index`.
 
 ## Pixelforge client
 
@@ -124,7 +124,7 @@ Authenticated routes:
 
 ## Inertia contracts
 
-`resources/js/pages/generations/Create.vue` and `Index.vue` are minimal stubs rendered inside `AppLayout`. Create receives:
+`resources/js/pages/generations/Create.vue` and `Index.vue` render inside `AppLayout`. Create receives:
 
 ```ts
 sizes: string[]
@@ -133,7 +133,7 @@ maxPromptLength: 4000
 maxReferenceImages: 4
 ```
 
-The future estimate endpoint contract is `GET /generations/estimate?chars=<int 0-4000>&size=&quality=&references=<int 0-4>` returning `{ min_nano: int, max_nano: int }`, user charge including markup.
+The estimate endpoint contract is `GET /generations/estimate?chars=<int 0-4000>&size=&quality=&references=<int 0-4>` returning `{ min_nano: int, max_nano: int }`, user charge including markup.
 
 Index receives a Laravel paginator with 20-per-page `data` items:
 

@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Integrating generation pages and sidebar documentation with submission and settlement on main.
+Verifying submission, webhook settlement, reconciliation, and generation pages together on phase-6-integration.
 
 ## Reference flows
 

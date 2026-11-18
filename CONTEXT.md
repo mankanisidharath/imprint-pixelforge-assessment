@@ -4,7 +4,7 @@ Read this, then `DECISIONS.md`, `ARCHITECTURE.md`, and `FLOW.md` before touching
 
 ## Right now
 
-Generation submission is integrated with the completed webhook and settlement work. The full suite passes 101 tests. The Laravel 13/Inertia 3 dependency upgrade remains blocked by Composer security advisories and the installed Pest Laravel plugin.
+Generation submission, webhook settlement, reconciliation, and the UI are integrated and covered by end-to-end tests. The Laravel 13/Inertia 3 dependency upgrade remains blocked by Composer security advisories and the installed Pest Laravel plugin.
 
 Local `main` includes the session's money calculations, settlement, shared-definition refactor, and billing documentation. Money calculations are committed as `555c187`, and settlement as `8355eff`. The remaining session changes were committed on `feat/pixelforge-shared-contracts` and integrated by fast-forward. The latest verified GitHub `main` remains at bootstrap commit `a8be42e`. Remote publication remains pending.
 
@@ -25,12 +25,12 @@ Local `main` includes the session's money calculations, settlement, shared-defin
 
 ## In progress
 
-Integrating the generation UI, sidebar branding, and user guide with submission and settlement on `main`.
+Preparing phase-6-integration for review.
 
 ## Broken
 
 - `composer require laravel/framework:^13.0 inertiajs/inertia-laravel:^3.0 --update-with-all-dependencies` is blocked by active Composer security advisories for every available Laravel 13 release.
-- The existing TypeScript configuration refers to unresolved `vue/tsx` and `./resources/js/types` entries. `vue-tsc --noEmit` stops on these entries. The production Vite build and targeted ESLint checks pass.
+- None currently identified beyond the dependency upgrade.
 
 ## Do not
 

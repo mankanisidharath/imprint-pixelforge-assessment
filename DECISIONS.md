@@ -4,6 +4,12 @@ Append-only log. Newest first.
 
 ---
 
+## 18 Nov 2026 — Exercise the integrated provider lifecycle
+
+Use signed HTTP webhook requests, a synchronous submission queue, fake provider HTTP responses, and the real settler in end-to-end tests. The early-webhook case delivers the event while the provider POST is in flight, exercising the race at the actual integration boundary. Migration checks use disposable in-memory SQLite to avoid touching a configured database.
+
+---
+
 ## 18 Nov 2026 — Integrate submission with shared generation options
 
 Preserve the signed webhook acceptance test and both controller test sets while integrating submission. Request validation uses the existing shared generation options, keeping accepted values and limits consistent with the creation page and factory.
