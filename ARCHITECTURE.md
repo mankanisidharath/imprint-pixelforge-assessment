@@ -35,7 +35,7 @@ Laravel application
 - `app/Services/CostCalculator.php` calculates provider costs, markup, and estimates in integer nanodollars.
 - `app/Services/GenerationSettler.php` settles snapshots transactionally for webhooks and reconciliation.
 - `app/Support/Money.php` parses decimal strings and formats exact nanodollar amounts.
-- `app/Jobs`: Durable background-job contracts.
+- `app/Jobs/SubmitGeneration.php`: Queued, idempotent provider submission and retry handling.
 - `app/Features/Pixelforge/TokenType.php` defines the token keys and billable-key list shared by costing and settlement.
 - `app/Features/Pixelforge/GenerationOptions.php` defines the options, defaults, and limits shared by the controller and factory.
 - `resources/js/pages`: Inertia Vue pages.
@@ -52,4 +52,4 @@ Laravel application
 
 Money values are integer nanodollars. A future ledger must be append-only, use idempotency keys, and lock rows while changing balances.
 
-The calculator returns provider-cost estimate bounds. The planned estimate endpoint applies markup to each bound for its user-facing preview. On success, settlement calculates actual provider cost from reported usage and records the marked-up amount in `charge_nano`. Failed generations record zero cost and charge. Balance debiting remains a future phase.
+The calculator returns provider-cost estimate bounds. The estimate endpoint applies markup to each bound for its user-facing preview. On success, settlement calculates actual provider cost from reported usage and records the marked-up amount in `charge_nano`. Failed generations record zero cost and charge. Balance debiting remains a future phase.

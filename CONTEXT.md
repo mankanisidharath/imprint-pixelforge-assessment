@@ -4,14 +4,14 @@ Read this, then `DECISIONS.md`, `ARCHITECTURE.md`, and `FLOW.md` before touching
 
 ## Right now
 
-Shared Pixelforge definitions, request setup, and navigation are consolidated. All 80 tests, Pint, targeted ESLint checks, and the frontend build pass. The Laravel 13/Inertia 3 dependency upgrade remains blocked by Composer security advisories and the installed Pest Laravel plugin.
+Generation submission is integrated with the completed webhook and settlement work. The full suite passes 101 tests. The Laravel 13/Inertia 3 dependency upgrade remains blocked by Composer security advisories and the installed Pest Laravel plugin.
 
 Local `main` includes the session's money calculations, settlement, shared-definition refactor, and billing documentation. Money calculations are committed as `555c187`, and settlement as `8355eff`. The remaining session changes were committed on `feat/pixelforge-shared-contracts` and integrated by fast-forward. The latest verified GitHub `main` remains at bootstrap commit `a8be42e`. Remote publication remains pending.
 
 ## Done
 
 - Added Pixelforge data contracts, persistence, route stubs, a provider client, and focused tests.
-- Implemented exact nanodollar arithmetic, estimates, settlement, webhook verification, and reconciliation.
+- Implemented exact nanodollar arithmetic, generation submission and estimates, settlement, webhook verification, and reconciliation.
 - Shared token keys between costing and settlement and generation options between the controller and factory.
 - Consolidated Pixelforge request configuration and navigation link definitions.
 - Reused the shared navigation item type in `NavMain` and corrected its link and active-state field to `href`.

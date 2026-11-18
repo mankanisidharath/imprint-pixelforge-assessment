@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Merged the settlement branch webhook test correction into local `main`, retaining the shared signed-request helper and verifying the result against isolated local PostgreSQL. Remote publication remains pending.
+Integrated generation submission with the signed webhook test and settlement changes; the full suite passes. Remote publication remains pending.
 
 ## Reference flows
 
@@ -12,7 +12,7 @@ Generation creation: `GET /generations/create` -> `GenerationController::create`
 
 `TokenType::BILLABLE_KEYS` supplies the keys for `CostCalculator::providerCost` and `GenerationSettler::apply`. Estimates use the same individual token constants.
 
-The planned estimate endpoint passes pricing, prompt character count, size, quality, and reference count to `CostCalculator::estimate`, then applies `charge` to both provider-cost bounds for the preview. The current endpoint returns empty JSON.
+The estimate endpoint passes pricing, prompt character count, size, quality, and reference count to `CostCalculator::estimate`, then applies `charge` to both provider-cost bounds. Generation creation stores those bounds and dispatches submission.
 
 On successful completion, `GenerationSettler::apply` calculates provider cost from actual usage and snapshot rates, applies `charge`, and saves `provider_cost_nano` and `charge_nano`. Provider failure records zero for both amounts. Balance debiting remains a future phase.
 
@@ -20,7 +20,7 @@ Generation history: `GET /generations` -> `GenerationController::index` -> `Gene
 
 Each public `Pixelforge` method creates a fresh configured request through `request()` and sends it to the corresponding provider endpoint.
 
-The future `SubmitGeneration` job will call `Pixelforge::create`, which posts to `/generations` with the local generation UUID as its idempotency key.
+`SubmitGeneration` calls `Pixelforge::create`, which posts to `/generations` with the local generation UUID as its idempotency key. Accepted snapshots go to the settler; retryable errors release the job, and rejection conditionally fails only unaccepted queued rows.
 
 `POST /webhooks/pixelforge` verifies the signature, inserts the event once, and calls `GenerationSettler::apply` to update the locked generation.
 

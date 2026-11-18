@@ -4,6 +4,10 @@ Append-only log. Newest first.
 
 ---
 
+## 18 Nov 2026 — Integrate submission with shared generation options
+
+Preserve the signed webhook acceptance test and both controller test sets while integrating submission. Request validation uses the existing shared generation options, keeping accepted values and limits consistent with the creation page and factory.
+
 ## 18 Nov 2026 — Integrate the reviewed session history by fast-forward
 
 Local `main` was an ancestor of the reviewed session branch. The remaining shared-code refactor and documentation were committed on `feat/pixelforge-shared-contracts`, then integrated into local `main` by fast-forward. This preserves the money and settlement commits together with their reviewed follow-up changes.
