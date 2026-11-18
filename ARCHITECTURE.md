@@ -37,6 +37,7 @@ Laravel application
 - `app/Features`: Empty boundary for future feature-owned behavior. Do not move existing Pixelforge contracts here without a coordinated change.
 - `resources/js/pages`: Inertia Vue pages.
 - `docs`: Provider facts and handoff contracts.
+- `public/user-guide.html`: Locally served guide linked from the sidebar.
 
 ## Data model
 

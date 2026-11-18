@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Bootstrap, living documentation, and initial Git history. The Laravel 13 dependency upgrade is blocked by Composer security advisories.
+Sidebar branding and navigation, including the local user guide.
 
 ## Reference flows
 
@@ -13,3 +13,5 @@ Generation history: `GET /generations` -> `GenerationController::index` -> `Gene
 Provider submission: future `SubmitGeneration` job -> `Pixelforge::create` -> Pixelforge `POST /generations`.
 
 Webhook receipt: `POST /webhooks/pixelforge` -> `PixelforgeWebhookController` -> future signature verification and `GenerationSettler::apply`.
+
+Sidebar documentation: `AppSidebar` -> `/user-guide.html` -> generation usage and current availability.

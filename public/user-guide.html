@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>User guide — PixelForge Assessment</title>
+        <style>
+            :root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.6; }
+            body { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+            h1, h2 { line-height: 1.2; }
+            h2 { margin-top: 2rem; }
+            a { color: light-dark(#1d4ed8, #93c5fd); }
+            .notice { border: 1px solid; border-radius: .5rem; padding: 1rem; }
+            li + li { margin-top: .5rem; }
+        </style>
+    </head>
+    <body>
+        <main>
+            <a href="/generations">← Back to generation history</a>
+            <h1>PixelForge Assessment user guide</h1>
+            <p>This guide explains the image generation screens and how to read their statuses and prices.</p>
+            <p class="notice"><strong>Current availability:</strong> This assessment branch has a preview interface. The estimate and submission endpoints are not implemented yet, so estimates are unavailable and submitting the form does not create an image.</p>
+            <h2>Creating an image</h2>
+            <ol>
+                <li>Choose <strong>Generate</strong> in the sidebar and enter a prompt describing the image. The counter shows the prompt length; the limit is 4,000 characters.</li>
+                <li>Select a square, landscape, or portrait size and a low, medium, or high quality.</li>
+                <li>Optionally add up to four reference image URLs. Use Remove to remove a URL.</li>
+                <li>When estimates and submission are connected, review the estimated cost range and choose <strong>Generate</strong>.</li>
+            </ol>
+            <h2>Estimates and charges</h2>
+            <p>The estimated range includes a 25% service fee. The actual charge is calculated when an image finishes and depends on the tokens used. Failed generations are free. If an estimate cannot be loaded, the page displays “Estimate unavailable.”</p>
+            <h2>Generation history</h2>
+            <p>Choose <strong>History</strong> to see your generations, their prompts, size, quality, cost, and creation time. Pending generations update automatically while the page is open.</p>
+            <ul>
+                <li><strong>Queued:</strong> Waiting to start. A note may explain the wait.</li>
+                <li><strong>Processing:</strong> The image is being generated.</li>
+                <li><strong>Succeeded:</strong> The image is ready and the final charge is displayed. Select the image to open it at full size.</li>
+                <li><strong>Failed:</strong> The generation was not charged. Review the error and select <strong>Try again</strong> to return to the form.</li>
+            </ul>
+            <p>Image links last 24 hours. After a link expires, the history card displays an expiration message. Use the pagination controls to browse older results.</p>
+            <h2>Account settings</h2>
+            <p>Open the user menu in the sidebar to access your profile and account settings or to sign out.</p>
+        </main>
+    </body>
+</html>

@@ -14,7 +14,7 @@ Bootstrap is complete. The Laravel 13/Inertia 3 dependency upgrade is blocked by
 
 ## In progress
 
-- Commit the initial repository state after final verification.
+- Update sidebar branding and navigation and add a local user guide. The generation estimate and submission endpoints on this branch are still stubs.
 
 ## Broken
 
