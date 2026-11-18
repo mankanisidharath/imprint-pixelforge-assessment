@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Bootstrap, living documentation, and initial Git history. The Laravel 13 dependency upgrade is blocked by Composer security advisories.
+Updated the existing webhook test to send a signed ping without a CSRF token. All 75 tests passed on isolated local PostgreSQL; merge the fix into local `main`.
 
 ## Reference flows
 
@@ -12,4 +12,4 @@ Generation history: `GET /generations` -> `GenerationController::index` -> `Gene
 
 Provider submission: future `SubmitGeneration` job -> `Pixelforge::create` -> Pixelforge `POST /generations`.
 
-Webhook receipt: `POST /webhooks/pixelforge` -> `PixelforgeWebhookController` -> future signature verification and `GenerationSettler::apply`.
+Webhook receipt: `POST /webhooks/pixelforge` -> `PixelforgeWebhookController` verifies the signature and records the event -> `GenerationSettler::apply` for generation events.
