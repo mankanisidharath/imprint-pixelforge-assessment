@@ -15,7 +15,7 @@ Local `main` includes the session's money calculations, settlement, shared-defin
 - Shared token keys between costing and settlement and generation options between the controller and factory.
 - Consolidated Pixelforge request configuration and navigation link definitions.
 - Reused the shared navigation item type in `NavMain` and corrected its link and active-state field to `href`.
-- Shared signed-webhook test setup and corrected the unsigned CSRF test.
+- Shared signed-webhook test setup and corrected the unsigned CSRF test; verified the settlement branch against isolated local PostgreSQL.
 - Documented integer markup rounding, the estimate-to-final-charge flow, and the current Git integration state.
 - Integrated the reviewed session work into local `main` with its commit history preserved.
 - Added living documentation and Git workflow conventions.

@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Completed integration of the session's money, settlement, shared-code refactor, and billing documentation into local `main` by fast-forward. Verification passed all 80 tests, Pint, targeted ESLint checks, and the frontend build. Remote publication remains pending.
+Merged the settlement branch webhook test correction into local `main`, retaining the shared signed-request helper and verifying the result against isolated local PostgreSQL. Remote publication remains pending.
 
 ## Reference flows
 

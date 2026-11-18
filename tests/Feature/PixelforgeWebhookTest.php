@@ -1,6 +1,6 @@
 <?php
 
-test('accepts Pixelforge webhooks without a CSRF token', function () {
+test('accepts signed Pixelforge webhooks without a CSRF token', function () {
     config(['services.pixelforge.webhook_secret' => 'test-secret']);
 
     $response = signedWebhook([
@@ -10,4 +10,5 @@ test('accepts Pixelforge webhooks without a CSRF token', function () {
     ]);
 
     $response->assertNoContent();
+    $this->assertDatabaseHas('webhook_events', ['event_id' => 'evt_123', 'outcome' => 'ping']);
 });
