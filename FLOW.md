@@ -2,7 +2,7 @@
 
 ## Currently touching
 
-Integrated generation submission with the signed webhook test and settlement changes; the full suite passes. Remote publication remains pending.
+Integrating generation pages and sidebar documentation with submission and settlement on main.
 
 ## Reference flows
 
@@ -27,3 +27,5 @@ Each public `Pixelforge` method creates a fresh configured request through `requ
 The scheduled `generations:reconcile` command calls `Pixelforge::find` and sends the snapshot to `GenerationSettler::apply`.
 
 Shared navigation definitions supply links for the header, sidebar, and generation breadcrumbs.
+
+Sidebar documentation: `AppSidebar` -> `/user-guide.html` -> generation usage.

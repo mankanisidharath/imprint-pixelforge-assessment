@@ -10,6 +10,8 @@ Local `main` includes the session's money calculations, settlement, shared-defin
 
 ## Done
 
+- Added generation creation and history pages, sidebar branding, and a local user guide.
+
 - Added Pixelforge data contracts, persistence, route stubs, a provider client, and focused tests.
 - Implemented exact nanodollar arithmetic, generation submission and estimates, settlement, webhook verification, and reconciliation.
 - Shared token keys between costing and settlement and generation options between the controller and factory.
@@ -23,7 +25,7 @@ Local `main` includes the session's money calculations, settlement, shared-defin
 
 ## In progress
 
-No active implementation work. Publishing local `main` to GitHub remains pending.
+Integrating the generation UI, sidebar branding, and user guide with submission and settlement on `main`.
 
 ## Broken
 

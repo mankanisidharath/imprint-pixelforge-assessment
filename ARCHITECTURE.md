@@ -43,6 +43,7 @@ Laravel application
 - `resources/js/features/generations/navigation.ts` defines generation links shared by the sidebar and page breadcrumbs.
 - `resources/js/types/index.ts` defines the navigation item shape consumed by navigation components.
 - `docs`: Provider facts and handoff contracts.
+- `public/user-guide.html`: Locally served guide linked from the sidebar.
 
 ## Data model
 

@@ -9,12 +9,12 @@ export const dashboardNavItem: NavItem = {
 
 export const repositoryNavItem: NavItem = {
     title: 'Repository',
-    href: 'https://github.com/laravel/vue-starter-kit',
+    href: 'https://github.com/mankanisidharath/imprint-pixelforge-assessment',
     icon: Folder,
 };
 
 export const documentationNavItem: NavItem = {
     title: 'Documentation',
-    href: 'https://laravel.com/docs/starter-kits',
+    href: '/user-guide.html',
     icon: BookOpen,
 };
