@@ -76,7 +76,7 @@ function relativeTime(value: string): string {
                 <span :title="generation.charge_exact === null ? undefined : '$' + generation.charge_exact">{{
                     generation.charge_nano === null ? 'Charge unavailable' : `Charged ${usd(generation.charge_nano)}`
                 }}</span>
-                <span class="text-muted-foreground"
+                <span class="ml-1 text-muted-foreground"
                     >(estimated {{ usd(generation.estimated_charge_min_nano) }} - {{ usd(generation.estimated_charge_max_nano) }})</span
                 >
             </p>
